@@ -1,0 +1,49 @@
+<div class="flex justify-center mt-6">
+  <ul class="inline-flex items-center space-x-2 text-gray-500">
+    <% if @posts.first_page? %>
+      <li>
+        <span class="px-4 py-2 border rounded-md bg-gray-200 text-gray-400 cursor-not-allowed">First</span>
+      </li>
+    <% else %>
+      <li>
+        <%= link_to 'First', url_for(page: 1), class: 'px-4 py-2 border rounded-md hover:bg-gray-100' %>
+      </li>
+    <% end %>
+
+    <% if @posts.prev_page %>
+      <li>
+        <%= link_to 'Previous', url_for(page: @posts.prev_page), class: 'px-4 py-2 border rounded-md hover:bg-gray-100' %>
+      </li>
+    <% else %>
+      <li>
+        <span class="px-4 py-2 border rounded-md bg-gray-200 text-gray-400 cursor-not-allowed">Previous</span>
+      </li>
+    <% end %>
+
+    <% (1..@posts.total_pages).each do |page| %>
+      <li>
+        <%= link_to page, url_for(page: page), class: "px-4 py-2 border rounded-md #{'bg-blue-500 text-white' if page == @posts.current_page} hover:bg-blue-100" %>
+      </li>
+    <% end %>
+
+    <% if @posts.next_page %>
+      <li>
+        <%= link_to 'Next', url_for(page: @posts.next_page), class: 'px-4 py-2 border rounded-md hover:bg-gray-100' %>
+      </li>
+    <% else %>
+      <li>
+        <span class="px-4 py-2 border rounded-md bg-gray-200 text-gray-400 cursor-not-allowed">Next</span>
+      </li>
+    <% end %>
+
+    <% if @posts.last_page? %>
+      <li>
+        <span class="px-4 py-2 border rounded-md bg-gray-200 text-gray-400 cursor-not-allowed">Last</span>
+      </li>
+    <% else %>
+      <li>
+        <%= link_to 'Last', url_for(page: @posts.total_pages), class: 'px-4 py-2 border rounded-md hover:bg-gray-100' %>
+      </li>
+    <% end %>
+  </ul>
+</div>

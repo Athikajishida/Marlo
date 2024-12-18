@@ -1,0 +1,58 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6 text-white text-center">Blog Posts</h1>
+  
+  <div class="max-w-4xl mx-auto space-y-6">
+    <% @posts.each do |post| %>
+      <div class="bg-gray-800 rounded-lg shadow-xl overflow-hidden">
+        <% if post.image.attached? %>
+          <div class="h-48 w-full">
+            <%= image_tag post.image, class: "w-full h-full object-cover" %>
+          </div>
+        <% end %>
+        
+        <div class="p-6">
+          <h2 class="text-2xl font-bold mb-2 text-white">
+            <%= link_to post.title, post_path(post), class: "hover:text-teal-400 transition" %>
+          </h2>
+          
+          <div class="flex items-center text-gray-400 mb-4">
+            <span class="mr-4">
+              By <%= post.user.username %>
+            </span>
+            <span>
+              <%= post.created_at.strftime("%B %d, %Y") %>
+            </span>
+          </div>
+          
+          <p class="text-gray-300 mb-4">
+            <%= truncate(post.body, length: 200) %>
+          </p>
+          
+          <div class="flex justify-between items-center">
+            <%= link_to "Read More", post_path(post), 
+              class: "bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-500 transition" %>
+            
+            <div class="flex items-center space-x-4 text-gray-400">
+              <!-- Comments -->
+              <span>
+                <i class="fas fa-comment"></i> 
+                <span id="comments-count-<%= post.id %>"><%= post.comments.count %></span>
+              </span>
+
+              <!-- Likes -->
+<span>
+  <i class="fas fa-heart like-btn text-gray-400 cursor-pointer" 
+     data-post-id="<%= post.id %>"></i> 
+  <span id="likes-count-<%= post.id %>"><%= post.likes.count %></span>
+</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+ 
+    <div class="flex justify-center">
+      <%= paginate @posts %>
+    </div>
+  </div>
+</div>
